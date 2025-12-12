@@ -43,7 +43,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             { expiresIn: '1d' }
         );
 
-        res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            sameSite: 'none',
+            secure: true
+        });
         res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
