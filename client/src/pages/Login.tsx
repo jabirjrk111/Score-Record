@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-import { GraduationCap, Mail, Lock, User, ArrowRight, AlertCircle } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, AlertCircle } from 'lucide-react';
 
 export const Login: React.FC = () => {
     const [isLogin, setIsLogin] = useState(true);

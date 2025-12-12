@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import { Button } from '../components/ui/Button';
-import { LogOut, GraduationCap, Download } from 'lucide-react';
+import { LogOut, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
