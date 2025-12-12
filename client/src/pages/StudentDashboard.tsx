@@ -74,7 +74,7 @@ export const StudentDashboard: React.FC = () => {
             <div className="bg-white shadow">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                        <GraduationCap className="text-primary-600" size={32} />
+                        <img src="/edtech-logo.png" alt="EdTech Logo" className="h-10 w-10 object-contain" />
                         <h1 className="text-2xl font-bold text-gray-900">Student Portal</h1>
                     </div>
                     <div className="flex items-center gap-4">

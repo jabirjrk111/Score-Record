@@ -68,6 +68,7 @@ export const TeacherDashboard: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<ExamsList />} />
                     <Route path="/create-exam" element={<CreateExam />} />
+                    <Route path="/edit-exam/:id" element={<CreateExam />} />
                     <Route path="/enter-marks" element={<EnterMarks />} />
                 </Routes>
             </div>

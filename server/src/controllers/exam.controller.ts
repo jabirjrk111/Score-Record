@@ -37,3 +37,55 @@ export const addSubjectToExam = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Server error', error });
     }
 };
+
+export const updateExam = async (req: Request, res: Response) => {
+    try {
+        const { examId } = req.params;
+        const { name, examDate, subjects } = req.body;
+
+        const exam = await Exam.findById(examId);
+        if (!exam) {
+            res.status(404).json({ message: 'Exam not found' });
+            return;
+        }
+
+        exam.name = name || exam.name;
+        exam.examDate = examDate || exam.examDate;
+        if (subjects) exam.subjects = subjects;
+
+        await exam.save();
+        res.json(exam);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+};
+
+export const deleteExam = async (req: Request, res: Response) => {
+    try {
+        const { examId } = req.params;
+        const exam = await Exam.findByIdAndDelete(examId);
+
+        if (!exam) {
+            res.status(404).json({ message: 'Exam not found' });
+            return;
+        }
+
+        res.json({ message: 'Exam deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+};
+
+export const getExamById = async (req: Request, res: Response) => {
+    try {
+        const { examId } = req.params;
+        const exam = await Exam.findById(examId);
+        if (!exam) {
+            res.status(404).json({ message: 'Exam not found' });
+            return;
+        }
+        res.json(exam);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+};

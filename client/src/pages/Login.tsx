@@ -56,8 +56,8 @@ export const Login: React.FC = () => {
 
                     {/* Header Section */}
                     <div className="text-center mb-8">
-                        <div className="mx-auto h-16 w-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-500/30 transform transition-transform hover:scale-110 duration-300">
-                            <GraduationCap size={36} className="text-white" />
+                        <div className="mx-auto h-20 w-20 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-primary-500/30 transform transition-transform hover:scale-110 duration-300 p-2">
+                            <img src="/edtech-logo.png" alt="EdTech Logo" className="w-full h-full object-contain" />
                         </div>
                         <h2 className="mt-6 text-3xl font-extrabold text-gray-900 tracking-tight">
                             {isLogin ? 'Welcome back' : 'Join us today'}

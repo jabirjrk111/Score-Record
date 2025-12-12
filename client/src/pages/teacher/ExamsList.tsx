@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import api from '../../api/axios';
 import { Plus } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
+import { Pencil, Trash2 } from 'lucide-react';
 
 export const ExamsList = () => {
+    const navigate = useNavigate();
     const [exams, setExams] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -21,6 +23,17 @@ export const ExamsList = () => {
         };
         fetchExams();
     }, []);
+
+    const handleDelete = async (id: string) => {
+        if (!window.confirm('Are you sure you want to delete this exam?')) return;
+        try {
+            await api.delete(`/exams/${id}`);
+            setExams(exams.filter(exam => exam._id !== id));
+        } catch (err) {
+            console.error('Failed to delete exam', err);
+            alert('Failed to delete exam');
+        }
+    };
 
     if (loading) return <div>Loading exams...</div>;
 
@@ -55,7 +68,14 @@ export const ExamsList = () => {
                                 ))}
                             </div>
                         </div>
-                        {/* Maybe add action buttons here later */}
+                        <div className="flex gap-2">
+                            <Button size="sm" variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50" onClick={() => navigate(`/teacher/edit-exam/${exam._id}`)}>
+                                <Pencil size={18} />
+                            </Button>
+                            <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => handleDelete(exam._id)}>
+                                <Trash2 size={18} />
+                            </Button>
+                        </div>
                     </div>
                 ))}
                 {exams.length === 0 && (

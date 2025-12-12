@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
 import api from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Trash2, Plus } from 'lucide-react';
 
 export const CreateExam = () => {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const isEditing = !!id;
     const [name, setName] = useState('');
     const [date, setDate] = useState('');
     const [subjects, setSubjects] = useState<{ name: string, maxMarks: number }[]>([{ name: '', maxMarks: 100 }]);
     const [loading, setLoading] = useState(false);
+
+    React.useEffect(() => {
+        if (isEditing) {
+            const fetchExam = async () => {
+                try {
+                    const res = await api.get(`/exams/${id}`);
+                    const exam = res.data;
+                    setName(exam.name);
+                    setDate(exam.examDate.split('T')[0]);
+                    setSubjects(exam.subjects);
+                } catch (error) {
+                    console.error("Failed to fetch exam", error);
+                    alert("Failed to load exam details");
+                    navigate('/teacher');
+                }
+            };
+            fetchExam();
+        }
+    }, [id, isEditing, navigate]);
 
     const handleSubjectChange = (index: number, field: 'name' | 'maxMarks', value: string | number) => {
         const newSubjects = [...subjects];
@@ -31,7 +52,11 @@ export const CreateExam = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await api.post('/exams', { name, examDate: date, subjects });
+            if (isEditing) {
+                await api.put(`/exams/${id}`, { name, examDate: date, subjects });
+            } else {
+                await api.post('/exams', { name, examDate: date, subjects });
+            }
             navigate('/teacher');
         } catch (error) {
             console.error(error);
@@ -43,7 +68,7 @@ export const CreateExam = () => {
 
     return (
         <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Create New Exam</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">{isEditing ? 'Edit Exam' : 'Create New Exam'}</h2>
 
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-6">
                 <Input
@@ -106,7 +131,7 @@ export const CreateExam = () => {
                 <div className="pt-4 flex justify-end gap-3">
                     <Button type="button" variant="outline" onClick={() => navigate('/teacher')}>Cancel</Button>
                     <Button type="submit" disabled={loading}>
-                        {loading ? 'Creating...' : 'Create Exam'}
+                        {loading ? 'Saving...' : (isEditing ? 'Update Exam' : 'Create Exam')}
                     </Button>
                 </div>
             </form>
