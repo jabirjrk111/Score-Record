@@ -95,7 +95,8 @@ export const ExamMarks = () => {
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {results.map((result) => {
-                                const total = Object.values(result.marks).reduce((a: any, b: any) => a + b, 0);
+                                const marks = result.marks as Record<string, number>;
+                                const total = Object.values(marks).reduce((a, b) => a + b, 0);
                                 return (
                                     <tr key={result._id} className="hover:bg-gray-50 transition-colors">
                                         <td className="px-6 py-4 font-medium text-gray-900">
@@ -104,7 +105,7 @@ export const ExamMarks = () => {
                                         </td>
                                         {exam.subjects.map((sub: any) => (
                                             <td key={sub._id} className="px-6 py-4">
-                                                {(result.marks as any)[sub.name] !== undefined ? (result.marks as any)[sub.name] : '-'}
+                                                {marks[sub.name] !== undefined ? (marks[sub.name] as React.ReactNode) : '-'}
                                             </td>
                                         ))}
                                         <td className="px-6 py-4 font-bold text-primary-600">{total}</td>
