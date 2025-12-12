@@ -3,7 +3,7 @@ import api from '../../api/axios';
 import { Plus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash2, Eye } from 'lucide-react';
 
 export const ExamsList = () => {
     const navigate = useNavigate();
@@ -69,6 +69,9 @@ export const ExamsList = () => {
                             </div>
                         </div>
                         <div className="flex gap-2">
+                            <Button size="sm" variant="ghost" className="text-gray-600 hover:text-primary-600 hover:bg-primary-50" onClick={() => navigate(`/teacher/exam-marks/${exam._id}`)} title="View Marks">
+                                <Eye size={18} />
+                            </Button>
                             <Button size="sm" variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50" onClick={() => navigate(`/teacher/edit-exam/${exam._id}`)}>
                                 <Pencil size={18} />
                             </Button>

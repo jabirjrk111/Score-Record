@@ -40,3 +40,13 @@ export const getStudentMarks = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Server error', error });
     }
 };
+
+export const getExamMarks = async (req: Request, res: Response) => {
+    try {
+        const { examId } = req.params;
+        const results = await Result.find({ exam: examId }).populate('student', 'name email');
+        res.json(results);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+};

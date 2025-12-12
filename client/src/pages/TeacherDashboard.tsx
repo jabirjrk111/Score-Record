@@ -8,6 +8,7 @@ import { Button } from '../components/ui/Button';
 import { ExamsList } from './teacher/ExamsList';
 import { CreateExam } from './teacher/CreateExam';
 import { EnterMarks } from './teacher/EnterMarks';
+import { ExamMarks } from './teacher/ExamMarks';
 
 export const TeacherDashboard: React.FC = () => {
     const { logout, user } = useAuth();
@@ -70,6 +71,7 @@ export const TeacherDashboard: React.FC = () => {
                     <Route path="/create-exam" element={<CreateExam />} />
                     <Route path="/edit-exam/:id" element={<CreateExam />} />
                     <Route path="/enter-marks" element={<EnterMarks />} />
+                    <Route path="/exam-marks/:examId" element={<ExamMarks />} />
                 </Routes>
             </div>
         </div>
